@@ -1,0 +1,11 @@
+﻿{
+  "MinimumTcAdminVersion": "2.0.152.0",
+  "SqlProfiles": {
+    "InstallSql": "install.sql",
+    "UpdateSql": "update.sql",
+    "UninstallSql": "uninstall.sql"
+  },
+  "Dll": "TCAdminCrons.dll",
+  "MasterOnly": true,
+  "Dependencies": ["FluentScheduler.dll"]
+}

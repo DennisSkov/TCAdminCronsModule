@@ -1,0 +1,132 @@
+﻿@using System.Web.Mvc.Ajax
+@using System.Web.Mvc.Html
+@using Kendo.Mvc.UI
+@using TCAdmin.SDK.Web.MVC.Extensions
+@model TCAdminCrons.Configuration.MinecraftCronConfiguration
+@{
+    Layout = this.GetTemplateFile("Shared/Main.cshtml", true);
+}
+
+@section sidebar{
+    @Html.Partial("_DefaultSidebar")
+}
+
+@using (Ajax.BeginForm(new AjaxOptions {OnSuccess = "TCAdmin.Ajax.ShowBasicDialog('Success', 'Successfully saved Minecraft Automatic Game Update Settings'); document.body.style.cursor = 'default';", OnFailure = "TCAdmin.Ajax.HandleAjaxFailure"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="primary-toolbar">
+        @(Html.Kendo().ToolBar()
+            .Name("ToolBar")
+            .Items(items =>
+            {
+                items.Add().Template(this.GetToolbarButton(Resources.Global.Save, "save"));
+                items.Add().Type(CommandType.Button).Icon("cancel").Text(Resources.Global.Cancel).Click("TCAdmin.Ajax.CancelClicked");
+                items.Add().Type(CommandType.Button).Icon("reload").Text("Run Now").Click("function(){runNow()}");
+            }))
+    </div>
+    <div class="primary-content">
+        <fieldset class="fieldset-form auto-focus">
+            @Html.ValidationSummary(true)
+            <ul>
+                <li>
+                    <dl>
+                        <h2>Base Settings</h2>
+                        <dt>@Html.LabelFor(m => m.GameId)</dt>
+                        <dd>@Html.Kendo().NumericTextBoxFor(m => m.GameId).Format("#")@Html.ValidationMessageFor(m => m.GameId)@Html.TooltipFor(m => m.GameId)</dd>
+                    </dl>
+                </li>
+                <li>
+                    <h2>Vanilla Settings</h2>
+                    <dl>
+                        <dt>@Html.LabelFor(m => m.VanillaSettings.Enabled)</dt>
+                        <dd>@Html.Kendo().SwitchFor(m => m.VanillaSettings.Enabled)</dd>
+                        <dt>@Html.LabelFor(m => m.VanillaSettings.NameTemplate)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.VanillaSettings.NameTemplate)</dd>
+                        <dt>@Html.LabelFor(m => m.VanillaSettings.Description)</dt>
+                        <dd>@Html.TextAreaFor(m => m.VanillaSettings.Description, new {@class = "k-textbox", style = "height: 100px"})</dd>
+                        <dt>@Html.LabelFor(m => m.VanillaSettings.Group)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.VanillaSettings.Group)</dd>
+                        <dt>@Html.LabelFor(m => m.VanillaSettings.SnapshotGroup)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.VanillaSettings.SnapshotGroup)</dd>
+                        <dt>@Html.LabelFor(m => m.VanillaSettings.UseVersionAsViewOrder)</dt>
+                        <dd>@Html.Kendo().SwitchFor(m => m.VanillaSettings.UseVersionAsViewOrder)</dd>
+                        <dt>@Html.LabelFor(m => m.VanillaSettings.GetLastReleaseUpdates)</dt>
+                        <dd>@Html.Kendo().NumericTextBoxFor(m => m.VanillaSettings.GetLastReleaseUpdates).Format("#")</dd>
+                        <dt>@Html.LabelFor(m => m.VanillaSettings.GetLastSnapshotUpdates)</dt>
+                        <dd>@Html.Kendo().NumericTextBoxFor(m => m.VanillaSettings.GetLastSnapshotUpdates).Format("#")</dd>
+                    </dl>
+                </li>
+                <li>
+                    <h2>Bukkit Settings</h2>
+                    <dl>
+                        <dt>@Html.LabelFor(m => m.BukkitSettings.Enabled)</dt>
+                        <dd>@Html.Kendo().SwitchFor(m => m.BukkitSettings.Enabled)</dd>
+                        <dt>@Html.LabelFor(m => m.BukkitSettings.NameTemplate)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.BukkitSettings.NameTemplate)</dd>
+                        <dt>@Html.LabelFor(m => m.BukkitSettings.Description)</dt>
+                        <dd>@Html.TextAreaFor(m => m.BukkitSettings.Description, new {@class = "k-textbox", style = "height: 100px"})</dd>
+                        <dt>@Html.LabelFor(m => m.BukkitSettings.Group)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.BukkitSettings.Group)</dd>
+                        <dt>@Html.LabelFor(m => m.BukkitSettings.UseVersionAsViewOrder)</dt>
+                        <dd>@Html.Kendo().SwitchFor(m => m.BukkitSettings.UseVersionAsViewOrder)</dd>
+                        <dt>@Html.LabelFor(m => m.BukkitSettings.GetLastReleaseUpdates)</dt>
+                        <dd>@Html.Kendo().NumericTextBoxFor(m => m.BukkitSettings.GetLastReleaseUpdates).Format("#")</dd>
+                    </dl>
+                </li>
+                <li>
+                    <h2>Paper Settings</h2>
+                    <dl>
+                        <dt>@Html.LabelFor(m => m.PaperSettings.Enabled)</dt>
+                        <dd>@Html.Kendo().SwitchFor(m => m.PaperSettings.Enabled)</dd>
+                        <dt>@Html.LabelFor(m => m.PaperSettings.NameTemplate)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.PaperSettings.NameTemplate)</dd>
+                        <dt>@Html.LabelFor(m => m.PaperSettings.Description)</dt>
+                        <dd>@Html.TextAreaFor(m => m.PaperSettings.Description, new {@class = "k-textbox", style = "height: 100px"})</dd>
+                        <dt>@Html.LabelFor(m => m.PaperSettings.Group)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.PaperSettings.Group)</dd>
+                        <dt>@Html.LabelFor(m => m.PaperSettings.UseVersionAsViewOrder)</dt>
+                        <dd>@Html.Kendo().SwitchFor(m => m.PaperSettings.UseVersionAsViewOrder)</dd>
+                        <dt>@Html.LabelFor(m => m.PaperSettings.GetLastReleaseUpdates)</dt>
+                        <dd>@Html.Kendo().NumericTextBoxFor(m => m.PaperSettings.GetLastReleaseUpdates).Format("#")</dd>
+                    </dl>
+                </li>
+                <li>
+                    <h2>Spigot Settings</h2>
+                    <dl>
+                        <dt>@Html.LabelFor(m => m.SpigotSettings.Enabled)</dt>
+                        <dd>@Html.Kendo().SwitchFor(m => m.SpigotSettings.Enabled)</dd>
+                        <dt>@Html.LabelFor(m => m.SpigotSettings.NameTemplate)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.SpigotSettings.NameTemplate)</dd>
+                        <dt>@Html.LabelFor(m => m.SpigotSettings.Description)</dt>
+                        <dd>@Html.TextAreaFor(m => m.SpigotSettings.Description, new {@class = "k-textbox", style = "height: 100px"})</dd>
+                        <dt>@Html.LabelFor(m => m.SpigotSettings.Group)</dt>
+                        <dd>@Html.Kendo().TextBoxFor(m => m.SpigotSettings.Group)</dd>
+                        <dt>@Html.LabelFor(m => m.SpigotSettings.UseVersionAsViewOrder)</dt>
+                        <dd>@Html.Kendo().SwitchFor(m => m.SpigotSettings.UseVersionAsViewOrder)</dd>
+                        <dt>@Html.LabelFor(m => m.SpigotSettings.GetLastReleaseUpdates)</dt>
+                        <dd>@Html.Kendo().NumericTextBoxFor(m => m.SpigotSettings.GetLastReleaseUpdates).Format("#")</dd>
+                    </dl>
+                </li>
+            </ul>
+        </fieldset>
+    </div>
+}
+
+<script>
+    function runNow(){
+        $.ajax({
+            type: "POST",
+            url: "/Crons/RunGameUpdatesNow",
+            data: JSON.stringify({ "gameUpdateType": 'Minecraft' }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (e) {
+                console.log(e);
+            },
+            success: function (e) {
+                console.log(e);
+                TCAdmin.Ajax.ShowUrlDialog("Run Minecraft Updates", e.url, function(e){}, 800, 600);
+            }
+        });
+    }
+</script>
