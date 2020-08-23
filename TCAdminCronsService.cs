@@ -6,6 +6,7 @@ using FluentScheduler;
 using TCAdmin.Interfaces.Logging;
 using TCAdmin.Interfaces.Server;
 using TCAdmin.SDK;
+using TCAdminCrons.Configuration;
 using TCAdminCrons.Crons.GameUpdates;
 
 namespace TCAdminCrons
@@ -85,11 +86,12 @@ namespace TCAdminCrons
         public static void RegisterCrons()
         {
             LogManager.Write("Initializing Cron Registry", LogType.Console);
+            var config = MinecraftCronConfiguration.GetConfiguration();
 
             CronRegistry.NonReentrantAsDefault();
             CronRegistry.Schedule<MinecraftVanillaUpdatesCron>().AndThen<MinecraftPaperUpdatesCron>()
-                .AndThen<MinecraftSpigotUpdatesCron>().AndThen<MinecraftBukkitUpdatesCron>().ToRunNow().AndEvery(1)
-                .Hours();
+                .AndThen<MinecraftSpigotUpdatesCron>().AndThen<MinecraftBukkitUpdatesCron>().ToRunNow().AndEvery(config.Seconds)
+                .Seconds();
 
             JobManager.Initialize(CronRegistry);
 

@@ -33,6 +33,9 @@
                         <h2>Base Settings</h2>
                         <dt>@Html.LabelFor(m => m.GameId)</dt>
                         <dd>@Html.Kendo().NumericTextBoxFor(m => m.GameId).Format("#")@Html.ValidationMessageFor(m => m.GameId)@Html.TooltipFor(m => m.GameId)</dd>
+
+                        <dt>@Html.LabelFor(m => m.Seconds)</dt>
+                        <dd>@Html.Kendo().NumericTextBoxFor(m => m.Seconds).Format("# seconds")@Html.ValidationMessageFor(m => m.Seconds)@Html.TooltipFor(m => m.Seconds)</dd>
                     </dl>
                 </li>
                 <li>

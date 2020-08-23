@@ -7,6 +7,9 @@ namespace TCAdminCrons.Configuration
         [Display(Name = "Game ID of the Minecraft Game Configuration.")]
         public int GameId { get; set; }
 
+        [Display(Name = "Run every x Seconds.")]
+        public int Seconds { get; set; } = 3600;
+
         public VanillaSettings VanillaSettings { get; set; } = new VanillaSettings();
         public PaperSettings PaperSettings { get; set; } = new PaperSettings();
         public SpigotSettings SpigotSettings { get; set; } = new SpigotSettings();
