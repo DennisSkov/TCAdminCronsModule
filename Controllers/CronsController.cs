@@ -45,8 +45,9 @@ namespace TCAdminCrons.Controllers
                 master.ServerUtilitiesService.GetMonitorLogsDirectory(), "console.log", master.OperatingSystem);
             var rt = new RemoteTail(master, virtualDirectorySecurity, consoleLog, "Console Log", string.Empty,
                 string.Empty);
-            fileSystem.CreateTextFile(Path.Combine(master.ServerUtilitiesService.GetMonitorDirectory(), "command.do"),
-                Encoding.Default.GetBytes("service tcacronsGU restart"));
+            fileSystem.CreateTextFile(
+                TCAdmin.SDK.Misc.FileSystem.CombinePath(master.ServerUtilitiesService.GetMonitorDirectory(),
+                    "command.do", master.OperatingSystem), Encoding.Default.GetBytes("service tcacronsGU restart"));
             return Json(new
             {
                 url = rt.GetUrl()
