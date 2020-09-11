@@ -13,7 +13,7 @@ namespace TCAdminCrons.Crons.GameUpdates
     {
         private readonly MinecraftCronConfiguration _minecraftCronConfiguration = MinecraftCronConfiguration.GetConfiguration();
 
-        public override async Task DoAction()
+        public override async System.Threading.Tasks.Task DoAction()
         {
             if (!_minecraftCronConfiguration.VanillaSettings.Enabled)
             {

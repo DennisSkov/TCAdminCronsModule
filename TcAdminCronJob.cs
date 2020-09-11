@@ -6,11 +6,11 @@ namespace TCAdminCrons
 {
     public abstract class TcAdminCronJob : IJob
     {
-        public abstract Task DoAction();
+        public abstract System.Threading.Tasks.Task DoAction();
 
         public void Execute()
         {
-            Task.Run(async () => await DoAction()).Wait();
+            System.Threading.Tasks.Task.Run(async () => await DoAction()).Wait();
         }
     }
 }

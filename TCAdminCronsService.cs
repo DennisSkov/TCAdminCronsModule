@@ -28,7 +28,7 @@ namespace TCAdminCrons
         {
             LogManager.Write("Starting TCAdmin Crons...", LogType.Console);
             
-            Task.Run(() =>
+            System.Threading.Tasks.Task.Run(() =>
             {
                 var createdThreadConnection = TCAdmin.SDK.Database.DatabaseManager.CreateDatabaseManagerForThread();
 
