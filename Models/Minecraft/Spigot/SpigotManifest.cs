@@ -56,7 +56,7 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
         
         private static string GetDownloadUrl(string version)
         {
-            return $"https://serverjars.com/api/fetchJar/bukkit/{version}";
+            return $"https://serverjars.com/api/fetchJar/spigot/{version}";
         }
     }
     public class SpigotVersionManifest
