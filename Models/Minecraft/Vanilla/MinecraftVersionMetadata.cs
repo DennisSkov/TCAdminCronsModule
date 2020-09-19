@@ -61,8 +61,9 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
             {
                 Name = config.VanillaSettings.NameTemplate.ReplaceWithVariables(variables),
                 GroupName = this.Type == "release" ? config.VanillaSettings.Group : config.VanillaSettings.SnapshotGroup,
-                WindowsFileName = $"{this.Downloads.Server.Url} minecraft_server.jar",
-                LinuxFileName = $"{this.Downloads.Server.Url} minecraft_server.jar",
+                WindowsFileName = $"{this.Downloads.Server.Url} {config.VanillaSettings.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{this.Downloads.Server.Url} {config.VanillaSettings.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.VanillaSettings.ImageUrl,
                 ExtractPath = "/",
                 Reinstallable = true,
                 DefaultInstall = false,

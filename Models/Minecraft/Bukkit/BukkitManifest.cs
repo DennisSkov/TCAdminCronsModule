@@ -37,8 +37,9 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
             {
                 Name = config.BukkitSettings.NameTemplate.ReplaceWithVariables(variables),
                 GroupName = config.BukkitSettings.Group,
-                WindowsFileName = $"{GetDownloadUrl(Version)} minecraft_server.jar",
-                LinuxFileName = $"{GetDownloadUrl(Version)} minecraft_server.jar",
+                WindowsFileName = $"{GetDownloadUrl(Version)} {config.BukkitSettings.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{GetDownloadUrl(Version)} {config.BukkitSettings.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.BukkitSettings.ImageUrl,
                 ExtractPath = "/",
                 Reinstallable = true,
                 DefaultInstall = false,

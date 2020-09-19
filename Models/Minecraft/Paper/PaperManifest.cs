@@ -40,8 +40,9 @@ namespace TCAdminCrons.Models.Minecraft.Paper
             {
                 Name = config.PaperSettings.NameTemplate.ReplaceWithVariables(variables),
                 GroupName = config.PaperSettings.Group,
-                WindowsFileName = $"{GetDownloadUrl(version)} minecraft_server.jar",
-                LinuxFileName = $"{GetDownloadUrl(version)} minecraft_server.jar",
+                WindowsFileName = $"{GetDownloadUrl(version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{GetDownloadUrl(version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.SpigotSettings.ImageUrl,
                 ExtractPath = "/",
                 Reinstallable = true,
                 DefaultInstall = false,

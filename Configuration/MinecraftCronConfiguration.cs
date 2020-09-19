@@ -41,6 +41,8 @@ namespace TCAdminCrons.Configuration
 
         [Display(Name = "Get the last x snapshots")]
         public int GetLastSnapshotUpdates { get; set; } = 15;
+        
+        public override string FileName { get; set; } = "minecraft_server.jar";
     }
 
     public class PaperSettings : GameUpdateSettings
@@ -54,6 +56,8 @@ namespace TCAdminCrons.Configuration
 
         public override bool UseVersionAsViewOrder { get; set; } = true;
         public override int GetLastReleaseUpdates { get; set; } = 15;
+        
+        public override string FileName { get; set; } = "minecraft_server.jar";
     }
 
     public class SpigotSettings : GameUpdateSettings
@@ -67,6 +71,8 @@ namespace TCAdminCrons.Configuration
 
         public override bool UseVersionAsViewOrder { get; set; } = true;
         public override int GetLastReleaseUpdates { get; set; } = 15;
+        
+        public override string FileName { get; set; } = "minecraft_server.jar";
     }
 
     public class BukkitSettings : GameUpdateSettings
@@ -80,6 +86,8 @@ namespace TCAdminCrons.Configuration
 
         public override bool UseVersionAsViewOrder { get; set; } = true;
         public override int GetLastReleaseUpdates { get; set; } = 15;
+
+        public override string FileName { get; set; } = "minecraft_server.jar";
     }
 
     public abstract class GameUpdateSettings
@@ -102,5 +110,11 @@ namespace TCAdminCrons.Configuration
 
         [Display(Name = "Get the last x updates.", Description = "Get the last x updates.")]
         public virtual int GetLastReleaseUpdates { get; set; } = 15;
+        
+        [Display(Name = "Image URL", Description = "Image that is shown in the grid.")]
+        public virtual string ImageUrl { get; set; } = "";
+        
+        [Display(Name = "File Name", Description = "This is the file name that is saved.")]
+        public virtual string FileName { get; set; } = "";
     }
 }

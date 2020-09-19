@@ -37,8 +37,9 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
             {
                 Name = config.SpigotSettings.NameTemplate.ReplaceWithVariables(variables),
                 GroupName = config.SpigotSettings.Group,
-                WindowsFileName = $"{GetDownloadUrl(Version)} minecraft_server.jar",
-                LinuxFileName = $"{GetDownloadUrl(Version)} minecraft_server.jar",
+                WindowsFileName = $"{GetDownloadUrl(Version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{GetDownloadUrl(Version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.SpigotSettings.ImageUrl,
                 ExtractPath = "/",
                 Reinstallable = true,
                 DefaultInstall = false,
