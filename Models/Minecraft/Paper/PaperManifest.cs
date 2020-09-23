@@ -43,7 +43,7 @@ namespace TCAdminCrons.Models.Minecraft.Paper
                 WindowsFileName = $"{GetDownloadUrl(version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
                 LinuxFileName = $"{GetDownloadUrl(version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
                 ImageUrl = config.SpigotSettings.ImageUrl,
-                ExtractPath = "/",
+                ExtractPath = config.PaperSettings.ExtractPath,
                 Reinstallable = true,
                 DefaultInstall = false,
                 GameId = config.GameId,

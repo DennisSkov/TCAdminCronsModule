@@ -64,7 +64,7 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
                 WindowsFileName = $"{this.Downloads.Server.Url} {config.VanillaSettings.FileName.ReplaceWithVariables(variables)}",
                 LinuxFileName = $"{this.Downloads.Server.Url} {config.VanillaSettings.FileName.ReplaceWithVariables(variables)}",
                 ImageUrl = config.VanillaSettings.ImageUrl,
-                ExtractPath = "/",
+                ExtractPath = config.VanillaSettings.ExtractPath,
                 Reinstallable = true,
                 DefaultInstall = false,
                 GameId = config.GameId,

@@ -116,5 +116,8 @@ namespace TCAdminCrons.Configuration
         
         [Display(Name = "File Name", Description = "This is the file name that is saved.")]
         public virtual string FileName { get; set; } = "";
+        
+        [Display(Name = "Extract Path", Description = "This is the path relative to the game server where this image is installed.")]
+        public virtual string ExtractPath { get; set; } = "/";
     }
 }

@@ -40,7 +40,7 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
                 WindowsFileName = $"{GetDownloadUrl(Version)} {config.BukkitSettings.FileName.ReplaceWithVariables(variables)}",
                 LinuxFileName = $"{GetDownloadUrl(Version)} {config.BukkitSettings.FileName.ReplaceWithVariables(variables)}",
                 ImageUrl = config.BukkitSettings.ImageUrl,
-                ExtractPath = "/",
+                ExtractPath = config.BukkitSettings.ExtractPath,
                 Reinstallable = true,
                 DefaultInstall = false,
                 GameId = config.GameId,

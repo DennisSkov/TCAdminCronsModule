@@ -40,7 +40,7 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
                 WindowsFileName = $"{GetDownloadUrl(Version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
                 LinuxFileName = $"{GetDownloadUrl(Version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
                 ImageUrl = config.SpigotSettings.ImageUrl,
-                ExtractPath = "/",
+                ExtractPath = config.SpigotSettings.ExtractPath,
                 Reinstallable = true,
                 DefaultInstall = false,
                 GameId = config.GameId,
