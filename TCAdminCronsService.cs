@@ -1,18 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using FluentScheduler;
+using TCAdmin.GameHosting.SDK.Objects;
 using TCAdmin.Interfaces.Logging;
 using TCAdmin.Interfaces.Server;
 using TCAdmin.SDK;
 using TCAdminCrons.Configuration;
 using TCAdminCrons.Crons.GameUpdates;
+using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons
 {
     public class TcAdminCronsService : IMonitorService
     {
+        public static object CronLock = new object();
         public static Registry CronRegistry;
 
         public TcAdminCronsService()
@@ -85,13 +90,22 @@ namespace TCAdminCrons
 
         public static void RegisterCrons()
         {
+            var cronJobs = CronJob.GetCronJobs();
             LogManager.Write("Initializing Cron Registry", LogType.Console);
-            var config = MinecraftCronConfiguration.GetConfiguration();
 
             CronRegistry.NonReentrantAsDefault();
-            CronRegistry.Schedule<MinecraftVanillaUpdatesCron>().AndThen<MinecraftPaperUpdatesCron>()
-                .AndThen<MinecraftSpigotUpdatesCron>().AndThen<MinecraftBukkitUpdatesCron>().ToRunNow().AndEvery(config.Seconds)
-                .Seconds();
+            foreach (var cronJob in cronJobs)
+            {
+                try
+                {
+                    CronRegistry.Schedule(cronJob.Create<TcAdminCronJob>()).ToRunNow().AndEvery(cronJob.ExecuteEverySeconds).Seconds();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
 
             JobManager.Initialize(CronRegistry);
 

@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
+using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Models.Minecraft.Vanilla
 {
@@ -45,7 +46,7 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
 
         public GameUpdate CreateGameUpdate()
         {
-            var config = MinecraftCronConfiguration.GetConfiguration();
+            var config = new CronJob(1).GetConfiguration<VanillaSettings>();
             
             var newId = Regex.Replace(this.Id, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);
@@ -56,23 +57,22 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
                 {"Update.Version", this.Id}
             };
 
-            Console.WriteLine("Name = " + config.VanillaSettings.NameTemplate.ReplaceWithVariables(variables));
             var gameUpdate = new GameUpdate
             {
-                Name = config.VanillaSettings.NameTemplate.ReplaceWithVariables(variables),
-                GroupName = this.Type == "release" ? config.VanillaSettings.Group : config.VanillaSettings.SnapshotGroup,
-                WindowsFileName = $"{this.Downloads.Server.Url} {config.VanillaSettings.FileName.ReplaceWithVariables(variables)}",
-                LinuxFileName = $"{this.Downloads.Server.Url} {config.VanillaSettings.FileName.ReplaceWithVariables(variables)}",
-                ImageUrl = config.VanillaSettings.ImageUrl,
-                ExtractPath = config.VanillaSettings.ExtractPath,
+                Name = config.NameTemplate.ReplaceWithVariables(variables),
+                GroupName = this.Type == "release" ? config.Group : config.SnapshotGroup,
+                WindowsFileName = $"{this.Downloads.Server.Url} {config.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{this.Downloads.Server.Url} {config.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.ImageUrl,
+                ExtractPath = config.ExtractPath,
                 Reinstallable = true,
                 DefaultInstall = false,
                 GameId = config.GameId,
-                Comments = config.VanillaSettings.Description.ReplaceWithVariables(variables),
+                Comments = config.Description.ReplaceWithVariables(variables),
                 UserAccess = true,
                 SubAdminAccess = true,
                 ResellerAccess = true,
-                ViewOrder = config.VanillaSettings.UseVersionAsViewOrder ? parsedId : 0
+                ViewOrder = config.UseVersionAsViewOrder ? parsedId : 0
             };
 
             gameUpdate.GenerateKey();

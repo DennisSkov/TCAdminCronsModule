@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
+using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Models.Minecraft.Paper
 {
@@ -26,7 +27,7 @@ namespace TCAdminCrons.Models.Minecraft.Paper
 
         public static GameUpdate GetGameUpdate(string version)
         {
-            var config = MinecraftCronConfiguration.GetConfiguration();
+            var config = new CronJob(3).GetConfiguration<PaperSettings>();
             
             var newId = Regex.Replace(version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);
@@ -38,20 +39,20 @@ namespace TCAdminCrons.Models.Minecraft.Paper
             
             var gameUpdate = new GameUpdate
             {
-                Name = config.PaperSettings.NameTemplate.ReplaceWithVariables(variables),
-                GroupName = config.PaperSettings.Group,
-                WindowsFileName = $"{GetDownloadUrl(version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
-                LinuxFileName = $"{GetDownloadUrl(version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
-                ImageUrl = config.SpigotSettings.ImageUrl,
-                ExtractPath = config.PaperSettings.ExtractPath,
+                Name = config.NameTemplate.ReplaceWithVariables(variables),
+                GroupName = config.Group,
+                WindowsFileName = $"{GetDownloadUrl(version)} {config.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{GetDownloadUrl(version)} {config.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.ImageUrl,
+                ExtractPath = config.ExtractPath,
                 Reinstallable = true,
                 DefaultInstall = false,
                 GameId = config.GameId,
-                Comments = config.PaperSettings.Description.ReplaceWithVariables(variables),
+                Comments = config.Description.ReplaceWithVariables(variables),
                 UserAccess = true,
                 SubAdminAccess = true,
                 ResellerAccess = true,
-                ViewOrder = config.PaperSettings.UseVersionAsViewOrder ? parsedId : 0
+                ViewOrder = config.UseVersionAsViewOrder ? parsedId : 0
             };
 
             gameUpdate.GenerateKey();

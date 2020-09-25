@@ -2,30 +2,6 @@
 
 namespace TCAdminCrons.Configuration
 {
-    public class MinecraftCronConfiguration
-    {
-        [Display(Name = "Game ID of the Minecraft Game Configuration.")]
-        public int GameId { get; set; }
-
-        [Display(Name = "Run every x Seconds.")]
-        public int Seconds { get; set; } = 3600;
-
-        public VanillaSettings VanillaSettings { get; set; } = new VanillaSettings();
-        public PaperSettings PaperSettings { get; set; } = new PaperSettings();
-        public SpigotSettings SpigotSettings { get; set; } = new SpigotSettings();
-        public BukkitSettings BukkitSettings { get; set; } = new BukkitSettings();
-
-        public static MinecraftCronConfiguration GetConfiguration()
-        {
-            return ConfigurationHelper.GetConfiguration<MinecraftCronConfiguration>("Crons.MinecraftUpdates");
-        }
-
-        public static void SetConfiguration(MinecraftCronConfiguration model)
-        {
-            ConfigurationHelper.SetConfiguration("Crons.MinecraftUpdates", model);
-        }
-    }
-
     public class VanillaSettings : GameUpdateSettings
     {
         public override bool Enabled { get; set; }
@@ -92,6 +68,9 @@ namespace TCAdminCrons.Configuration
 
     public abstract class GameUpdateSettings
     {
+        [Display(Description = "Game ID to add game updates to.")]
+        public virtual int GameId { get; set; } = 0;
+        
         [Display(Description = "Enable this game update option.")]
         public virtual bool Enabled { get; set; } = false;
 

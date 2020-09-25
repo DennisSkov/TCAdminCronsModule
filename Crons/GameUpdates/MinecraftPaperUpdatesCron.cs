@@ -1,54 +1,65 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
+using Alexr03.Common.Logging;
 using TCAdmin.GameHosting.SDK.Objects;
-using TCAdmin.Interfaces.Logging;
 using TCAdmin.SDK;
 using TCAdminCrons.Configuration;
 using TCAdminCrons.Models.Minecraft.Paper;
+using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Crons.GameUpdates
 {
     public class MinecraftPaperUpdatesCron : TcAdminCronJob
     {
-        private readonly MinecraftCronConfiguration _minecraftCronConfiguration =
-            MinecraftCronConfiguration.GetConfiguration();
+        private PaperSettings _paperSettings;
+
+        public MinecraftPaperUpdatesCron() : base(Logger.Create<MinecraftPaperUpdatesCron>())
+        {
+        }
 
         public override async System.Threading.Tasks.Task DoAction()
         {
-            if (!_minecraftCronConfiguration.PaperSettings.Enabled)
+            Logger.LogMessage($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
+
+            _paperSettings = new CronJob(3).GetConfiguration<PaperSettings>();
+
+            if (!_paperSettings.Enabled)
             {
-                LogManager.Write("[Minecraft Paper Update Cron] - Disabled in Configuration.", LogType.Console);
+                Logger.LogMessage("Disabled in Configuration.");
                 return;
             }
             try
             {
-                LogManager.Write("[Minecraft Paper Update Cron] Running...", LogType.Console);
+                Logger.LogMessage("Running...");
                 AddUpdatesForMcTemp();
             }
             catch (Exception e)
             {
-                LogManager.WriteError(e, e.Message);
+                Logger.LogException(e);
                 throw;
+            }
+            finally
+            {
+                Logger.LogMessage("|----------------------------------------------------------------------------------|");
             }
         }
 
         public void AddUpdatesForMcTemp()
         {
-            var gameUpdates = GameUpdate.GetUpdates(_minecraftCronConfiguration.GameId).Cast<GameUpdate>().ToList();
+            var gameUpdates = GameUpdate.GetUpdates(_paperSettings.GameId).Cast<GameUpdate>().ToList();
             var paperUpdates = PaperManifest.GetManifest();
 
-            foreach (var version in paperUpdates.Versions.Take(_minecraftCronConfiguration.PaperSettings.GetLastReleaseUpdates))
+            foreach (var version in paperUpdates.Versions.Take(_paperSettings.GetLastReleaseUpdates))
             {
                 var gameUpdate = PaperManifest.GetGameUpdate(version);
                 if (!gameUpdates.Any(x => x.Name == gameUpdate.Name && x.GroupName == gameUpdate.GroupName))
                 {
                     gameUpdate.Save();
-                    LogManager.Write($"[Minecraft Paper Update Cron] Saved Game Update for {version}", LogType.Console);
+                    Logger.LogMessage($"Saved Game Update for {version}");
                 }
                 else
                 {
-                    LogManager.Write("[Minecraft Paper Update Cron] Game Update already exists for " + version, LogType.Console);
+                    Logger.LogMessage("Game Update already exists for " + version);
                 }
             }
         }

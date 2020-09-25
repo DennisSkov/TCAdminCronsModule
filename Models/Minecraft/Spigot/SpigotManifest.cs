@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
+using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Models.Minecraft.Spigot
 {
@@ -23,7 +24,7 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
         
         public GameUpdate GetGameUpdate()
         {
-            var config = MinecraftCronConfiguration.GetConfiguration();
+            var config = new CronJob(4).GetConfiguration<SpigotSettings>();
             
             var newId = Regex.Replace(this.Version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);
@@ -35,20 +36,20 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
             
             var gameUpdate = new GameUpdate
             {
-                Name = config.SpigotSettings.NameTemplate.ReplaceWithVariables(variables),
-                GroupName = config.SpigotSettings.Group,
-                WindowsFileName = $"{GetDownloadUrl(Version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
-                LinuxFileName = $"{GetDownloadUrl(Version)} {config.SpigotSettings.FileName.ReplaceWithVariables(variables)}",
-                ImageUrl = config.SpigotSettings.ImageUrl,
-                ExtractPath = config.SpigotSettings.ExtractPath,
+                Name = config.NameTemplate.ReplaceWithVariables(variables),
+                GroupName = config.Group,
+                WindowsFileName = $"{GetDownloadUrl(Version)} {config.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{GetDownloadUrl(Version)} {config.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.ImageUrl,
+                ExtractPath = config.ExtractPath,
                 Reinstallable = true,
                 DefaultInstall = false,
                 GameId = config.GameId,
-                Comments = config.SpigotSettings.Description.ReplaceWithVariables(variables),
+                Comments = config.Description.ReplaceWithVariables(variables),
                 UserAccess = true,
                 SubAdminAccess = true,
                 ResellerAccess = true,
-                ViewOrder = config.SpigotSettings.UseVersionAsViewOrder ? parsedId : 0
+                ViewOrder = config.UseVersionAsViewOrder ? parsedId : 0
             };
 
             gameUpdate.GenerateKey();

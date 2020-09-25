@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
+using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Models.Minecraft.Bukkit
 {
@@ -23,7 +24,7 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
         
         public GameUpdate GetGameUpdate()
         {
-            var config = MinecraftCronConfiguration.GetConfiguration();
+            var config = new CronJob(2).GetConfiguration<BukkitSettings>();
             
             var newId = Regex.Replace(this.Version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);
@@ -35,20 +36,20 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
             
             var gameUpdate = new GameUpdate
             {
-                Name = config.BukkitSettings.NameTemplate.ReplaceWithVariables(variables),
-                GroupName = config.BukkitSettings.Group,
-                WindowsFileName = $"{GetDownloadUrl(Version)} {config.BukkitSettings.FileName.ReplaceWithVariables(variables)}",
-                LinuxFileName = $"{GetDownloadUrl(Version)} {config.BukkitSettings.FileName.ReplaceWithVariables(variables)}",
-                ImageUrl = config.BukkitSettings.ImageUrl,
-                ExtractPath = config.BukkitSettings.ExtractPath,
+                Name = config.NameTemplate.ReplaceWithVariables(variables),
+                GroupName = config.Group,
+                WindowsFileName = $"{GetDownloadUrl(Version)} {config.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{GetDownloadUrl(Version)} {config.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.ImageUrl,
+                ExtractPath = config.ExtractPath,
                 Reinstallable = true,
                 DefaultInstall = false,
                 GameId = config.GameId,
-                Comments = config.BukkitSettings.Description.ReplaceWithVariables(variables),
+                Comments = config.Description.ReplaceWithVariables(variables),
                 UserAccess = true,
                 SubAdminAccess = true,
                 ResellerAccess = true,
-                ViewOrder = config.BukkitSettings.UseVersionAsViewOrder ? parsedId : 0
+                ViewOrder = config.UseVersionAsViewOrder ? parsedId : 0
             };
 
             gameUpdate.GenerateKey();

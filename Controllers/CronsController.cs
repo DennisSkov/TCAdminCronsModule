@@ -1,37 +1,55 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Alexr03.Common.Web.Helpers;
+using Newtonsoft.Json.Linq;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdmin.SDK.VirtualFileSystem;
 using TCAdmin.SDK.Web.FileManager;
 using TCAdmin.SDK.Web.MVC.Controllers;
-using TCAdmin.Web.MVC;
-using TCAdminCrons.Configuration;
-using TCAdminCrons.Models;
+using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Controllers
 {
     public class CronsController : BaseController
     {
-        public ActionResult Minecraft()
+        public ActionResult Configuration()
         {
-            var model = MinecraftCronConfiguration.GetConfiguration();
-            return View(model);
+            return View();
+        }
+        
+        [ParentAction("Configuration")]
+        public ActionResult ConfigureCron(int id)
+        {
+            var cronJob = new CronJob(id);
+            TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
+            var configurationJObject = (JObject)cronJob.GetConfiguration<object>();
+            var o = configurationJObject.ToObject(cronJob.Configuration.Type);
+            ViewData.TemplateInfo = new TemplateInfo
+            {
+                HtmlFieldPrefix = cronJob.Configuration.Type.Name,
+            };
+            return PartialView($"{cronJob.Configuration.View}", o);
         }
 
         [HttpPost]
-        public ActionResult Minecraft(MinecraftCronConfiguration model)
+        [ParentAction("Configuration")]
+        public ActionResult ConfigureCron(int id, FormCollection model)
         {
-            MinecraftCronConfiguration.SetConfiguration(model);
-            return View(model);
+            var cronJob = new CronJob(id);
+            cronJob.ExecuteEverySeconds = int.Parse(Request[$"{cronJob.Configuration.Type.Name}.repeatEvery"]);
+            cronJob.Save();
+            TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
+            var bindModel = model.Parse(ControllerContext, cronJob.Configuration.Type);
+            cronJob.SetConfiguration(bindModel);
+            return PartialView($"{cronJob.Configuration.View}", bindModel);
         }
 
         [HttpPost]
-        [ParentAction("Minecraft")]
-        public ActionResult RunGameUpdatesNow()
+        [ParentAction("Configuration")]
+        public ActionResult RunCronNow(int id)
         {
+            var cronJob = new CronJob(id);
+
             var master = TCAdmin.GameHosting.SDK.Objects.Server.GetEnabledServers().Cast<Server>()
                 .FirstOrDefault(x => x.IsMaster);
             if (master == null)
@@ -39,15 +57,11 @@ namespace TCAdminCrons.Controllers
                 return Json(new { });
             }
 
-            var fileSystem = master.FileSystemService;
             var virtualDirectorySecurity = new VirtualDirectorySecurity();
-            var consoleLog = TCAdmin.SDK.Misc.FileSystem.CombinePath(
-                master.ServerUtilitiesService.GetMonitorLogsDirectory(), "console.log", master.OperatingSystem);
+            System.Threading.Tasks.Task.Run(() => cronJob.ExecuteCron());
+            var consoleLog = cronJob.GetLogFile();
             var rt = new RemoteTail(master, virtualDirectorySecurity, consoleLog, "Console Log", string.Empty,
                 string.Empty);
-            fileSystem.CreateTextFile(
-                TCAdmin.SDK.Misc.FileSystem.CombinePath(master.ServerUtilitiesService.GetMonitorDirectory(),
-                    "command.do", master.OperatingSystem), Encoding.Default.GetBytes("service tcacronsGU restart"));
             return Json(new
             {
                 url = rt.GetUrl()
