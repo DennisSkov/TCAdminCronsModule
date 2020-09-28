@@ -24,7 +24,7 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
         
         public GameUpdate GetGameUpdate()
         {
-            var config = new CronJob(2).GetConfiguration<BukkitSettings>();
+            var config = new CronJob(2).Configuration.GetConfiguration<BukkitSettings>();
             
             var newId = Regex.Replace(this.Version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);

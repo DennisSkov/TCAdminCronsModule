@@ -21,7 +21,7 @@ namespace TCAdminCrons.Crons.GameUpdates
         {
             Logger.LogMessage($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
 
-            _paperSettings = new CronJob(3).GetConfiguration<PaperSettings>();
+            _paperSettings = new CronJob(3).Configuration.GetConfiguration<PaperSettings>();
 
             if (!_paperSettings.Enabled)
             {

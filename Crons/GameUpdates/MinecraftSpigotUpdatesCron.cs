@@ -19,7 +19,7 @@ namespace TCAdminCrons.Crons.GameUpdates
         {
             Logger.LogMessage($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
 
-            _spigotSettings = new CronJob(4).GetConfiguration<SpigotSettings>();
+            _spigotSettings = new CronJob(4).Configuration.GetConfiguration<SpigotSettings>();
             if (!_spigotSettings.Enabled)
             {
                 Logger.LogMessage("Disabled in Configuration.");

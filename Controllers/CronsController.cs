@@ -22,7 +22,7 @@ namespace TCAdminCrons.Controllers
         {
             var cronJob = new CronJob(id);
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
-            var configurationJObject = (JObject)cronJob.GetConfiguration<object>();
+            var configurationJObject = (JObject)cronJob.Configuration.GetConfiguration<object>();
             var o = configurationJObject.ToObject(cronJob.Configuration.Type);
             ViewData.TemplateInfo = new TemplateInfo
             {
@@ -40,7 +40,7 @@ namespace TCAdminCrons.Controllers
             cronJob.Save();
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
             var bindModel = model.Parse(ControllerContext, cronJob.Configuration.Type);
-            cronJob.SetConfiguration(bindModel);
+            cronJob.Configuration.SetConfiguration(bindModel);
             return PartialView($"{cronJob.Configuration.View}", bindModel);
         }
 
