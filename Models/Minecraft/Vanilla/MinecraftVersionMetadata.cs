@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Alexr03.Common.Misc.Strings;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
@@ -60,7 +61,42 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
             var gameUpdate = new GameUpdate
             {
                 Name = config.NameTemplate.ReplaceWithVariables(variables),
-                GroupName = this.Type == "release" ? config.Group : config.SnapshotGroup,
+                GroupName = config.Group,
+                WindowsFileName = $"{this.Downloads.Server.Url} {config.FileName.ReplaceWithVariables(variables)}",
+                LinuxFileName = $"{this.Downloads.Server.Url} {config.FileName.ReplaceWithVariables(variables)}",
+                ImageUrl = config.ImageUrl,
+                ExtractPath = config.ExtractPath,
+                Reinstallable = true,
+                DefaultInstall = false,
+                GameId = config.GameId,
+                Comments = config.Description.ReplaceWithVariables(variables),
+                UserAccess = true,
+                SubAdminAccess = true,
+                ResellerAccess = true,
+                ViewOrder = config.UseVersionAsViewOrder ? parsedId : 0
+            };
+
+            gameUpdate.GenerateKey();
+            return gameUpdate;
+        }
+        
+        public GameUpdate CreateGameUpdateSnapshot()
+        {
+            var config = new CronJob(5).Configuration.GetConfiguration<VanillaSnapshotSettings>();
+            
+            var newId = Regex.Replace(this.Id, "[^0-9]", "");
+            int.TryParse(newId, out var parsedId);
+
+            var variables = new Dictionary<string, object>
+            {
+                {"Update", this},
+                {"Update.Version", this.Id}
+            };
+
+            var gameUpdate = new GameUpdate
+            {
+                Name = config.NameTemplate.ReplaceWithVariables(variables),
+                GroupName = config.Group,
                 WindowsFileName = $"{this.Downloads.Server.Url} {config.FileName.ReplaceWithVariables(variables)}",
                 LinuxFileName = $"{this.Downloads.Server.Url} {config.FileName.ReplaceWithVariables(variables)}",
                 ImageUrl = config.ImageUrl,

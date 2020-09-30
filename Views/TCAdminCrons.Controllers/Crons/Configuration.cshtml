@@ -1,4 +1,5 @@
 ﻿@using System.Web.Mvc.Html
+@using Alexr03.Common.Misc.Strings
 @using Kendo.Mvc.UI
 @using TCAdmin.SDK.Web.MVC.Extensions
 @using TCAdminCrons.Models.Objects
@@ -16,7 +17,7 @@
     {
         foreach (var cronJob in CronJob.GetCronJobs().Where(cron => cron.Configuration.HasView()))
         {
-            items.Add().Text(string.Format("{0} Configuration", cronJob.Create().GetType().Name)).LoadContentFrom("ConfigureCron", "Crons", new {id = cronJob.Id});
+            items.Add().Text(cronJob.Create().GetType().Name.SplitEveryCapital()).LoadContentFrom("ConfigureCron", "Crons", new {id = cronJob.Id});
         }
     })
     .SelectedIndex(0)
@@ -36,7 +37,7 @@
             },
             success: function (e) {
                 console.log(e);
-                TCAdmin.Ajax.ShowUrlDialog("Run Minecraft Updates", e.url, function(e){}, 1600, 600);
+                TCAdmin.Ajax.ShowUrlDialog("Run Cron Job", e.url, function(e){}, 1600, 600);
             }
         });
     }

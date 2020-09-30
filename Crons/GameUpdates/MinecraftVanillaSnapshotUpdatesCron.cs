@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Alexr03.Common.TCAdmin.Configuration;
 using TCAdmin.GameHosting.SDK.Objects;
-using TCAdmin.Interfaces.Logging;
-using TCAdmin.SDK;
 using TCAdminCrons.Configuration;
 using TCAdminCrons.Models.Minecraft.Vanilla;
 using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Crons.GameUpdates
 {
-    public class MinecraftVanillaUpdatesCron : TcAdminCronJob
+    public class MinecraftVanillaSnapshotUpdatesCron : TcAdminCronJob
     {
-        private VanillaSettings _vanillaSettings;
+        private VanillaSnapshotSettings _vanillaSnapshotSettings;
         
-        public MinecraftVanillaUpdatesCron() : base(Alexr03.Common.Logging.Logger.Create<MinecraftVanillaUpdatesCron>())
+        public MinecraftVanillaSnapshotUpdatesCron() : base(Alexr03.Common.Logging.Logger.Create<MinecraftVanillaSnapshotUpdatesCron>())
         {
         }
 
@@ -23,9 +19,9 @@ namespace TCAdminCrons.Crons.GameUpdates
         {
             Logger.LogMessage($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
 
-            _vanillaSettings = new CronJob(1).Configuration.GetConfiguration<VanillaSettings>();
+            _vanillaSnapshotSettings = new CronJob(5).Configuration.GetConfiguration<VanillaSnapshotSettings>();
 
-            if (!_vanillaSettings.Enabled)
+            if (!_vanillaSnapshotSettings.Enabled)
             {
                 Logger.LogMessage("Disabled in Configuration.");
                 return;
@@ -48,13 +44,13 @@ namespace TCAdminCrons.Crons.GameUpdates
 
         public void AddUpdatesForMcTemp()
         {
-            var gameUpdates = GameUpdate.GetUpdates(_vanillaSettings.GameId).Cast<GameUpdate>().ToList();
+            var gameUpdates = GameUpdate.GetUpdates(_vanillaSnapshotSettings.GameId).Cast<GameUpdate>().ToList();
             var releases = MinecraftVersionManifest.GetManifests().Versions
-                .Where(x => x.Type.ToLower() == "release").Take(_vanillaSettings.GetLastReleaseUpdates);
-            
+                .Where(x => x.Type.ToLower() == "snapshot").Take(_vanillaSnapshotSettings.GetLastReleaseUpdates);
+
             foreach (var metaData in releases.Select(version => version.GetMetadata()))
             {
-                var gameUpdate = metaData.CreateGameUpdate();
+                var gameUpdate = metaData.CreateGameUpdateSnapshot();
                 if (!gameUpdates.Any(x => x.Name == gameUpdate.Name && x.GroupName == gameUpdate.GroupName))
                 {
                     gameUpdate.Save();

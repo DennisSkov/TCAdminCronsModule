@@ -7,16 +7,25 @@ namespace TCAdminCrons.Configuration
         public override bool Enabled { get; set; }
         public override string NameTemplate { get; set; } = "{Update.Version}";
         public override string Group { get; set; } = "Vanilla Release";
-        [Display(Name = "Snapshot Group")] public string SnapshotGroup { get; set; } = "Vanilla Snapshot";
-
         public override string Description { get; set; } =
             "This is a vanilla server snapshot of Minecraft: Java Edition | Release Date: {Update.ReleaseTime} | Added by TCAdminCrons";
 
         public override bool UseVersionAsViewOrder { get; set; } = true;
         public override int GetLastReleaseUpdates { get; set; } = 15;
+        public override string FileName { get; set; } = "minecraft_server.jar";
+    }
+    
+    public class VanillaSnapshotSettings : GameUpdateSettings
+    {
+        public override bool Enabled { get; set; }
+        public override string NameTemplate { get; set; } = "{Update.Version}";
+        public override string Group { get; set; } = "Vanilla Snapshot Release";
 
-        [Display(Name = "Get the last x snapshots")]
-        public int GetLastSnapshotUpdates { get; set; } = 15;
+        public override string Description { get; set; } =
+            "This is a vanilla snapshot server snapshot of Minecraft: Java Edition | Release Date: {Update.ReleaseTime} | Added by TCAdminCrons";
+
+        public override bool UseVersionAsViewOrder { get; set; } = true;
+        public override int GetLastReleaseUpdates { get; set; } = 15;
         
         public override string FileName { get; set; } = "minecraft_server.jar";
     }

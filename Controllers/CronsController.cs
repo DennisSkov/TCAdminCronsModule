@@ -2,11 +2,12 @@
 using System.Web.Mvc;
 using Alexr03.Common.Web.Helpers;
 using Newtonsoft.Json.Linq;
-using TCAdmin.GameHosting.SDK.Objects;
+using TCAdmin.SDK.Objects;
 using TCAdmin.SDK.VirtualFileSystem;
 using TCAdmin.SDK.Web.FileManager;
 using TCAdmin.SDK.Web.MVC.Controllers;
 using TCAdminCrons.Models.Objects;
+using Server = TCAdmin.GameHosting.SDK.Objects.Server;
 
 namespace TCAdminCrons.Controllers
 {
@@ -21,6 +22,7 @@ namespace TCAdminCrons.Controllers
         public ActionResult ConfigureCron(int id)
         {
             var cronJob = new CronJob(id);
+            TempData["id"] = id;
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
             var configurationJObject = (JObject)cronJob.Configuration.GetConfiguration<object>();
             var o = configurationJObject.ToObject(cronJob.Configuration.Type);
@@ -38,6 +40,7 @@ namespace TCAdminCrons.Controllers
             var cronJob = new CronJob(id);
             cronJob.ExecuteEverySeconds = int.Parse(Request[$"{cronJob.Configuration.Type.Name}.repeatEvery"]);
             cronJob.Save();
+            TempData["id"] = id;
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
             var bindModel = model.Parse(ControllerContext, cronJob.Configuration.Type);
             cronJob.Configuration.SetConfiguration(bindModel);
