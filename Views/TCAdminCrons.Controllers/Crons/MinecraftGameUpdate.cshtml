@@ -19,7 +19,7 @@
     @Html.AntiForgeryToken()
     <div class="primary-toolbar">
         @(Html.Kendo().ToolBar()
-            .Name("ToolBar".PrefixType(configType))
+            .Name("ToolBar".Prefix(configType))
             .Items(items =>
             {
                 items.Add().Template(this.GetToolbarButton(Resources.Global.Save, "save"));
@@ -38,7 +38,7 @@
                         <dd>@Html.Kendo().NumericTextBoxFor(m => m.GameId).Format("#")@Html.ValidationMessageFor(m => m.GameId)@Html.TooltipFor(m => m.GameId)</dd>
 
                         <dt>@Html.Label("Repeat Every X Seconds")</dt>
-                        <dd>@Html.Kendo().NumericTextBox().Name("repeatEvery".PrefixType(configType)).Value(int.Parse(TempData["repeatEvery"].ToString())).Format("#")</dd>
+                        <dd>@Html.Kendo().NumericTextBox().Name("repeatEvery".Prefix(configType)).Value(int.Parse(TempData["repeatEvery"].ToString())).Format("#")</dd>
                     </dl>
                 </li>
                 <li>

@@ -28,7 +28,7 @@ namespace TCAdminCrons.Models.Minecraft.Paper
 
         public static GameUpdate GetGameUpdate(string version)
         {
-            var config = new CronJob(3).Configuration.GetConfiguration<PaperSettings>();
+            var config = new CronJob(3).Configuration.Parse<PaperSettings>();
             
             var newId = Regex.Replace(version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);

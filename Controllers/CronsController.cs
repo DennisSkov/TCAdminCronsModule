@@ -24,7 +24,7 @@ namespace TCAdminCrons.Controllers
             var cronJob = new CronJob(id);
             TempData["id"] = id;
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
-            var configurationJObject = (JObject)cronJob.Configuration.GetConfiguration<object>();
+            var configurationJObject = (JObject)cronJob.Configuration.Parse<object>();
             var o = configurationJObject.ToObject(cronJob.Configuration.Type);
             ViewData.TemplateInfo = new TemplateInfo
             {

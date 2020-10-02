@@ -47,7 +47,7 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
 
         public GameUpdate CreateGameUpdate()
         {
-            var config = new CronJob(1).Configuration.GetConfiguration<VanillaSettings>();
+            var config = new CronJob(1).Configuration.Parse<VanillaSettings>();
             
             var newId = Regex.Replace(this.Id, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);
@@ -82,7 +82,7 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
         
         public GameUpdate CreateGameUpdateSnapshot()
         {
-            var config = new CronJob(5).Configuration.GetConfiguration<VanillaSnapshotSettings>();
+            var config = new CronJob(5).Configuration.Parse<VanillaSnapshotSettings>();
             
             var newId = Regex.Replace(this.Id, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);

@@ -25,7 +25,7 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
         
         public GameUpdate GetGameUpdate()
         {
-            var config = new CronJob(4).Configuration.GetConfiguration<SpigotSettings>();
+            var config = new CronJob(4).Configuration.Parse<SpigotSettings>();
             
             var newId = Regex.Replace(this.Version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);

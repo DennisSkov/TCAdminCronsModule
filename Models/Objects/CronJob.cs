@@ -7,7 +7,7 @@ namespace TCAdminCrons.Models.Objects
 {
     public class CronJob : DynamicTypeBase
     {
-        public CronJob() : base("tcmodule_cron_jobs", Globals.ModuleId)
+        public CronJob() : base("tcmodule_cron_jobs")
         {
             this.SetValue("id", -1);
         }

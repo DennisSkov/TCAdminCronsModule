@@ -23,7 +23,7 @@ namespace TCAdminCrons.Crons.GameUpdates
         {
             Logger.LogMessage($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
 
-            _bukkitSettings = new CronJob(2).Configuration.GetConfiguration<BukkitSettings>();
+            _bukkitSettings = new CronJob(2).Configuration.Parse<BukkitSettings>();
 
             if (!_bukkitSettings.Enabled)
             {
