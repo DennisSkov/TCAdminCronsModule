@@ -15,7 +15,7 @@ namespace TCAdminCrons.Crons.GameUpdates
     {
         private BukkitSettings _bukkitSettings;
 
-        public MinecraftBukkitUpdatesCron() : base(Logger.Create<MinecraftBukkitUpdatesCron>())
+        public MinecraftBukkitUpdatesCron() : base()
         {
         }
 

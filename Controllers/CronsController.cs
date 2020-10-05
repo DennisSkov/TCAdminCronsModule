@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using Alexr03.Common.TCAdmin.Web.Binders;
 using Alexr03.Common.Web.Helpers;
 using Newtonsoft.Json.Linq;
-using TCAdmin.SDK.Objects;
 using TCAdmin.SDK.VirtualFileSystem;
 using TCAdmin.SDK.Web.FileManager;
 using TCAdmin.SDK.Web.MVC.Controllers;
@@ -17,14 +17,13 @@ namespace TCAdminCrons.Controllers
         {
             return View();
         }
-        
+
         [ParentAction("Configuration")]
-        public ActionResult ConfigureCron(int id)
+        public ActionResult ConfigureCron([DynamicTypeBaseBinder] CronJob cronJob)
         {
-            var cronJob = new CronJob(id);
-            TempData["id"] = id;
+            TempData["id"] = cronJob.Id;
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
-            var configurationJObject = (JObject)cronJob.Configuration.Parse<object>();
+            var configurationJObject = cronJob.Configuration.Parse<JObject>();
             var o = configurationJObject.ToObject(cronJob.Configuration.Type);
             ViewData.TemplateInfo = new TemplateInfo
             {
@@ -35,12 +34,11 @@ namespace TCAdminCrons.Controllers
 
         [HttpPost]
         [ParentAction("Configuration")]
-        public ActionResult ConfigureCron(int id, FormCollection model)
+        public ActionResult ConfigureCron([DynamicTypeBaseBinder] CronJob cronJob, FormCollection model)
         {
-            var cronJob = new CronJob(id);
             cronJob.ExecuteEverySeconds = int.Parse(Request[$"{cronJob.Configuration.Type.Name}.repeatEvery"]);
             cronJob.Save();
-            TempData["id"] = id;
+            TempData["id"] = cronJob.Id;
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
             var bindModel = model.Parse(ControllerContext, cronJob.Configuration.Type);
             cronJob.Configuration.SetConfiguration(bindModel);

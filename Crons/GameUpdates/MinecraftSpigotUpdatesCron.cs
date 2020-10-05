@@ -11,7 +11,7 @@ namespace TCAdminCrons.Crons.GameUpdates
     {
         private SpigotSettings _spigotSettings;
 
-        public MinecraftSpigotUpdatesCron() : base(Alexr03.Common.Logging.Logger.Create<MinecraftSpigotUpdatesCron>())
+        public MinecraftSpigotUpdatesCron() : base()
         {
         }
 

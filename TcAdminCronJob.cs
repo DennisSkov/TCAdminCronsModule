@@ -5,12 +5,12 @@ namespace TCAdminCrons
 {
     public abstract class TcAdminCronJob : IJob
     {
-        protected TcAdminCronJob(Logger logger)
+        protected TcAdminCronJob()
         {
-            Logger = logger;
+            Logger = Logger.Create(GetType());
         }
 
-        public Logger Logger { get; private set; }
+        public Logger Logger { get; }
         
         public abstract System.Threading.Tasks.Task DoAction();
 

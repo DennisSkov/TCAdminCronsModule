@@ -13,7 +13,7 @@ namespace TCAdminCrons.Crons.GameUpdates
     {
         private PaperSettings _paperSettings;
 
-        public MinecraftPaperUpdatesCron() : base(Logger.Create<MinecraftPaperUpdatesCron>())
+        public MinecraftPaperUpdatesCron() : base()
         {
         }
 

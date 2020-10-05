@@ -11,7 +11,7 @@ namespace TCAdminCrons.Crons.GameUpdates
     {
         private VanillaSnapshotSettings _vanillaSnapshotSettings;
         
-        public MinecraftVanillaSnapshotUpdatesCron() : base(Alexr03.Common.Logging.Logger.Create<MinecraftVanillaSnapshotUpdatesCron>())
+        public MinecraftVanillaSnapshotUpdatesCron() : base()
         {
         }
 

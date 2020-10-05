@@ -2,6 +2,8 @@
 using System.Linq;
 using Alexr03.Common.TCAdmin.Objects;
 using TCAdmin.Interfaces.Database;
+using TCAdmin.SDK.Objects;
+using TCAdmin.SDK.Web.MVC.Controllers;
 
 namespace TCAdminCrons.Models.Objects
 {
@@ -11,7 +13,7 @@ namespace TCAdminCrons.Models.Objects
         {
             this.SetValue("id", -1);
         }
-
+        
         public CronJob(int id) : this()
         {
             this.SetValue("id", id);

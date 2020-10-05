@@ -15,7 +15,7 @@ namespace TCAdminCrons.Crons.GameUpdates
     {
         private VanillaSettings _vanillaSettings;
         
-        public MinecraftVanillaUpdatesCron() : base(Alexr03.Common.Logging.Logger.Create<MinecraftVanillaUpdatesCron>())
+        public MinecraftVanillaUpdatesCron() : base()
         {
         }
 
