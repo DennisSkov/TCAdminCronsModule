@@ -15,7 +15,7 @@
     .Name("tabstrip")
     .Items(items =>
     {
-        foreach (var cronJob in CronJob.GetCronJobs().Where(cron => cron.HasConfiguration && cron.Configuration.HasView()))
+        foreach (var cronJob in CronJob.GetCronJobs().Where(cron => cron.HasConfiguration && cron.Configuration.HasView))
         {
             items.Add().Text(cronJob.Create().GetType().Name.SplitEveryCapital()).LoadContentFrom("ConfigureCron", "Crons", new {id = cronJob.Id});
         }
