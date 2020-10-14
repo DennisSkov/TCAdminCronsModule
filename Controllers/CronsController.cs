@@ -41,7 +41,10 @@ namespace TCAdminCrons.Controllers
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
             var bindModel = model.Parse(ControllerContext, cronJob.Configuration.Type);
             cronJob.Configuration.SetConfiguration(bindModel);
-            return PartialView($"{cronJob.Configuration.View}", bindModel);
+            return Json(new
+            {
+                Message = $"Successfully updated <strong>{cronJob.Type.Name}</strong>"
+            });
         }
 
         [HttpPost]
