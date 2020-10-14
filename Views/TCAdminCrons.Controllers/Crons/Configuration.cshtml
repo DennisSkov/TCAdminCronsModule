@@ -1,10 +1,14 @@
 ﻿@using System.Web.Mvc.Html
 @using Alexr03.Common.Misc.Strings
+@using Alexr03.Common.Web.Extensions
 @using Kendo.Mvc.UI
 @using TCAdmin.SDK.Web.MVC.Extensions
 @using TCAdminCrons.Models.Objects
 @{
     Layout = this.GetTemplateFile("Shared/Main.cshtml", true);
+    var cronJobsGroups = CronJob.GetCronJobs().Where(cron => cron.HasConfiguration && cron.Configuration.HasView)
+        .GroupBy(x => x.Group)
+        .ToDictionary(g => g.Key, g => g.ToList());
 }
 
 @section sidebar{
@@ -12,18 +16,31 @@
 }
 
 @(Html.Kendo().TabStrip()
-    .Name("tabstrip")
+    .Name("tabstripGroups")
     .Items(items =>
     {
-        foreach (var cronJob in CronJob.GetCronJobs().Where(cron => cron.HasConfiguration && cron.Configuration.HasView))
+        foreach (var group in cronJobsGroups)
         {
-            items.Add().Text(cronJob.Create().GetType().Name.SplitEveryCapital()).LoadContentFrom("ConfigureCron", "Crons", new {id = cronJob.Id});
+            Console.WriteLine("T: " + group.Value.Count);
+            items.Add().Text(!string.IsNullOrEmpty(group.Key) ? group.Key : "Other").Content(@<text>
+                                                    @(Html.Kendo().TabStrip()
+                                                        .Name("tabstrip".Prefix(group.Key + "_", "_"))
+                                                        .Items(items2 =>
+                                                        {
+                                                            foreach (var cronJob in group.Value)
+                                                            {
+                                                                items2.Add().Text(cronJob.Create().GetType().Name.SplitEveryCapital()).LoadContentFrom("ConfigureCron", "Crons", new {id = cronJob.Id});
+                                                            }
+                                                        })
+                                                        .SelectedIndex(0)
+                                                        .TabPosition(TabStripTabPosition.Left)
+                                                        )
+                                                 </text>);
         }
     })
     .SelectedIndex(0)
-    .TabPosition(TabStripTabPosition.Left)
     )
-    
+
 <script>
     function runNow(id){
         $.ajax({

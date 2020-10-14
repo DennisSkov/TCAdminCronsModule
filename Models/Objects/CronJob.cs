@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Alexr03.Common.TCAdmin.Extensions;
 using Alexr03.Common.TCAdmin.Objects;
 using TCAdmin.Interfaces.Database;
 using TCAdmin.SDK.Objects;
@@ -35,6 +36,8 @@ namespace TCAdminCrons.Models.Objects
             get => this.GetIntegerValue("executeEverySeconds");
             set => this.SetValue("executeEverySeconds", value);
         }
+
+        public string Group => this.AppData.HasValueAndSet("Group") ? this.AppData["Group"].ToString() : "";
 
         public void ExecuteCron()
         {
