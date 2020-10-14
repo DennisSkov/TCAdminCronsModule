@@ -1,16 +1,15 @@
 ﻿@using System.Web.Mvc.Ajax
 @using System.Web.Mvc.Html
 @using Alexr03.Common.Misc.Strings
+@using Alexr03.Common.TCAdmin.Objects
 @using Alexr03.Common.Web.Extensions
-@using Kendo.Mvc.Extensions
 @using Kendo.Mvc.UI
 @using TCAdmin.SDK.Web.MVC.Extensions
-@using TCAdminCrons
-@using TCAdminCrons.Configuration
+@using TCAdminCrons.Models.Objects
 @model TCAdminCrons.Configuration.GameUpdateSettings
 
 @{
-    var id = TempData["id"].ToString();
+    var id = DynamicTypeBase.GetCurrent<CronJob>().Id;
     var configType = Model.GetType();
 }
 

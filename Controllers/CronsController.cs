@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using Alexr03.Common.TCAdmin.Objects;
 using Alexr03.Common.TCAdmin.Web.Binders;
 using Alexr03.Common.Web.Extensions;
 using Newtonsoft.Json.Linq;
@@ -21,7 +22,6 @@ namespace TCAdminCrons.Controllers
         [ParentAction("Configuration")]
         public ActionResult ConfigureCron([DynamicTypeBaseBinder] CronJob cronJob)
         {
-            TempData["id"] = cronJob.Id;
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
             var configurationJObject = cronJob.Configuration.Parse<JObject>();
             var o = configurationJObject.ToObject(cronJob.Configuration.Type);
@@ -38,7 +38,6 @@ namespace TCAdminCrons.Controllers
         {
             cronJob.ExecuteEverySeconds = int.Parse(Request[$"{cronJob.Configuration.Type.Name}.repeatEvery"]);
             cronJob.Save();
-            TempData["id"] = cronJob.Id;
             TempData["repeatEvery"] = cronJob.ExecuteEverySeconds;
             var bindModel = model.Parse(ControllerContext, cronJob.Configuration.Type);
             cronJob.Configuration.SetConfiguration(bindModel);
@@ -49,8 +48,7 @@ namespace TCAdminCrons.Controllers
         [ParentAction("Configuration")]
         public ActionResult RunCronNow(int id)
         {
-            var cronJob = new CronJob(id);
-
+            var cronJob = DynamicTypeBase.GetCurrent<CronJob>();
             var master = TCAdmin.GameHosting.SDK.Objects.Server.GetEnabledServers().Cast<Server>()
                 .FirstOrDefault(x => x.IsMaster);
             if (master == null)
