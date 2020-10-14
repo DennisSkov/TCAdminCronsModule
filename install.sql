@@ -45,23 +45,23 @@ create table tcmodule_cron_jobs
     app_data              text        null
 );
 
-INSERT INTO tcadmin.tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
+INSERT INTO tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
                                         executeEverySeconds, app_data)
 VALUES (1, 'TCAdminCrons.Crons.GameUpdates.MinecraftVanillaUpdatesCron, TCAdminCrons',
         '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 1, 1, 3600, null);
-INSERT INTO tcadmin.tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
+INSERT INTO tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
                                         executeEverySeconds, app_data)
 VALUES (2, 'TCAdminCrons.Crons.GameUpdates.MinecraftVanillaSnapshotUpdatesCron, TCAdminCrons',
         '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 2, 1, 3600, null);
-INSERT INTO tcadmin.tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
+INSERT INTO tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
                                         executeEverySeconds, app_data)
 VALUES (3, 'TCAdminCrons.Crons.GameUpdates.MinecraftBukkitUpdatesCron, TCAdminCrons',
         '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 3, 1, 3600, null);
-INSERT INTO tcadmin.tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
+INSERT INTO tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
                                         executeEverySeconds, app_data)
 VALUES (4, 'TCAdminCrons.Crons.GameUpdates.MinecraftPaperUpdatesCron, TCAdminCrons',
         '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 4, 1, 3600, null);
-INSERT INTO tcadmin.tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
+INSERT INTO tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
                                         executeEverySeconds, app_data)
 VALUES (5, 'TCAdminCrons.Crons.GameUpdates.MinecraftSpigotUpdatesCron, TCAdminCrons',
         '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 5, 1, 3600, null);
