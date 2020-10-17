@@ -17,17 +17,17 @@ namespace TCAdminCrons.Crons.GameUpdates
 
         public override async System.Threading.Tasks.Task DoAction()
         {
-            Logger.LogMessage($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
+            Logger.Information($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
 
             _spigotSettings = new CronJob(4).Configuration.Parse<SpigotSettings>();
             if (!_spigotSettings.Enabled)
             {
-                Logger.LogMessage("Disabled in Configuration.");
+                Logger.Information("Disabled in Configuration.");
                 return;
             }
             try
             {
-                Logger.LogMessage("Running...");
+                Logger.Information("Running...");
                 AddUpdatesForMcTemp();
             }
             catch (Exception e)
@@ -37,7 +37,7 @@ namespace TCAdminCrons.Crons.GameUpdates
             }
             finally
             {
-                Logger.LogMessage("|----------------------------------------------------------------------------------|");
+                Logger.Information("|----------------------------------------------------------------------------------|");
             }
         }
         public void AddUpdatesForMcTemp()
@@ -51,11 +51,11 @@ namespace TCAdminCrons.Crons.GameUpdates
                 if (!gameUpdates.Any(x => x.Name == gameUpdate.Name && x.GroupName == gameUpdate.GroupName))
                 {
                     gameUpdate.Save();
-                    Logger.LogMessage($"[Minecraft Spigot Update Cron] Saved Game Update for {version.Version}");
+                    Logger.Information($"[Minecraft Spigot Update Cron] Saved Game Update for {version.Version}");
                 }
                 else
                 {
-                    Logger.LogMessage("[Minecraft Spigot Update Cron] Game Update already exists for " + version.Version);
+                    Logger.Information("[Minecraft Spigot Update Cron] Game Update already exists for " + version.Version);
                 }
             }
         }

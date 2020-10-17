@@ -19,18 +19,18 @@ namespace TCAdminCrons.Crons.GameUpdates
 
         public override async System.Threading.Tasks.Task DoAction()
         {
-            Logger.LogMessage($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
+            Logger.Information($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
 
             _paperSettings = new CronJob(3).Configuration.Parse<PaperSettings>();
 
             if (!_paperSettings.Enabled)
             {
-                Logger.LogMessage("Disabled in Configuration.");
+                Logger.Information("Disabled in Configuration.");
                 return;
             }
             try
             {
-                Logger.LogMessage("Running...");
+                Logger.Information("Running...");
                 AddUpdatesForMcTemp();
             }
             catch (Exception e)
@@ -40,7 +40,7 @@ namespace TCAdminCrons.Crons.GameUpdates
             }
             finally
             {
-                Logger.LogMessage("|----------------------------------------------------------------------------------|");
+                Logger.Information("|----------------------------------------------------------------------------------|");
             }
         }
 
@@ -55,11 +55,11 @@ namespace TCAdminCrons.Crons.GameUpdates
                 if (!gameUpdates.Any(x => x.Name == gameUpdate.Name && x.GroupName == gameUpdate.GroupName))
                 {
                     gameUpdate.Save();
-                    Logger.LogMessage($"Saved Game Update for {version}");
+                    Logger.Information($"Saved Game Update for {version}");
                 }
                 else
                 {
-                    Logger.LogMessage("Game Update already exists for " + version);
+                    Logger.Information("Game Update already exists for " + version);
                 }
             }
         }
