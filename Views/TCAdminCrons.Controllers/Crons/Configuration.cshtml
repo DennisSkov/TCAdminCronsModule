@@ -21,7 +21,6 @@
     {
         foreach (var group in cronJobsGroups)
         {
-            Console.WriteLine("T: " + group.Value.Count);
             items.Add().Text(!string.IsNullOrEmpty(group.Key) ? group.Key : "Other").Content(@<text>
                                                     @(Html.Kendo().TabStrip()
                                                         .Name("tabstrip".Prefix(group.Key + "_", "_"))
