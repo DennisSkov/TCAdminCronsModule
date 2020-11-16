@@ -23,7 +23,7 @@ namespace TCAdminCrons.Crons.GameUpdates
         {
             Logger.Information($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
 
-            _vanillaSettings = new CronJob(1).Configuration.Parse<VanillaSettings>();
+            _vanillaSettings = new CronJob().FindByType(this.GetType()).Configuration.Parse<VanillaSettings>();
 
             if (!_vanillaSettings.Enabled)
             {

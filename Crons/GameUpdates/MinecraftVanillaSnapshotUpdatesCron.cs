@@ -19,7 +19,7 @@ namespace TCAdminCrons.Crons.GameUpdates
         {
             Logger.Information($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
 
-            _vanillaSnapshotSettings = new CronJob(2).Configuration.Parse<VanillaSnapshotSettings>();
+            _vanillaSnapshotSettings = new CronJob().FindByType(this.GetType()).Configuration.Parse<VanillaSnapshotSettings>();
 
             if (!_vanillaSnapshotSettings.Enabled)
             {

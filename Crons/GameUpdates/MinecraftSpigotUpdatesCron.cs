@@ -18,8 +18,8 @@ namespace TCAdminCrons.Crons.GameUpdates
         public override async System.Threading.Tasks.Task DoAction()
         {
             Logger.Information($"|------------------------|Log Initialised @ {DateTime.Now:s}|------------------------|");
-            
-            _spigotSettings = new CronJob(5).Configuration.Parse<SpigotSettings>();
+
+            _spigotSettings = new CronJob().FindByType(this.GetType()).Configuration.Parse<SpigotSettings>();
             if (!_spigotSettings.Enabled)
             {
                 Logger.Information("Disabled in Configuration.");
