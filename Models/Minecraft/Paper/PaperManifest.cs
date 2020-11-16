@@ -5,6 +5,7 @@ using Alexr03.Common.Misc.Strings;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
+using TCAdminCrons.Crons.GameUpdates;
 using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Models.Minecraft.Paper
@@ -28,7 +29,7 @@ namespace TCAdminCrons.Models.Minecraft.Paper
 
         public static GameUpdate GetGameUpdate(string version)
         {
-            var config = new CronJob(3).Configuration.Parse<PaperSettings>();
+            var config = new CronJob().FindByType(typeof(MinecraftPaperUpdatesCron)).Configuration.Parse<PaperSettings>();
             
             var newId = Regex.Replace(version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);

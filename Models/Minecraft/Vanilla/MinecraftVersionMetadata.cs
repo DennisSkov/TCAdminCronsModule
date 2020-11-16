@@ -5,6 +5,7 @@ using Alexr03.Common.Misc.Strings;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
+using TCAdminCrons.Crons.GameUpdates;
 using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Models.Minecraft.Vanilla
@@ -47,7 +48,7 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
 
         public GameUpdate CreateGameUpdate()
         {
-            var config = new CronJob(1).Configuration.Parse<VanillaSettings>();
+            var config = new CronJob().FindByType(typeof(MinecraftVanillaUpdatesCron)).Configuration.Parse<VanillaSettings>();
             
             var newId = Regex.Replace(this.Id, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);
@@ -82,7 +83,7 @@ namespace TCAdminCrons.Models.Minecraft.Vanilla
         
         public GameUpdate CreateGameUpdateSnapshot()
         {
-            var config = new CronJob(5).Configuration.Parse<VanillaSnapshotSettings>();
+            var config = new CronJob().FindByType(typeof(MinecraftVanillaUpdatesCron)).Configuration.Parse<VanillaSnapshotSettings>();
             
             var newId = Regex.Replace(this.Id, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);

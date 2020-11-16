@@ -5,6 +5,7 @@ using Alexr03.Common.Misc.Strings;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
+using TCAdminCrons.Crons.GameUpdates;
 using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Models.Minecraft.Spigot
@@ -25,7 +26,7 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
         
         public GameUpdate GetGameUpdate()
         {
-            var config = new CronJob(4).Configuration.Parse<SpigotSettings>();
+            var config = new CronJob().FindByType(typeof(MinecraftSpigotUpdatesCron)).Configuration.Parse<SpigotSettings>();
             
             var newId = Regex.Replace(this.Version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);

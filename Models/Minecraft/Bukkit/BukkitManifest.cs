@@ -5,6 +5,7 @@ using Alexr03.Common.Misc.Strings;
 using Newtonsoft.Json;
 using TCAdmin.GameHosting.SDK.Objects;
 using TCAdminCrons.Configuration;
+using TCAdminCrons.Crons.GameUpdates;
 using TCAdminCrons.Models.Objects;
 
 namespace TCAdminCrons.Models.Minecraft.Bukkit
@@ -25,8 +26,8 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
         
         public GameUpdate GetGameUpdate()
         {
-            var config = new CronJob(2).Configuration.Parse<BukkitSettings>();
-            
+            var config = new CronJob().FindByType(typeof(MinecraftBukkitUpdatesCron)).Configuration.Parse<BukkitSettings>();
+
             var newId = Regex.Replace(this.Version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);
             
