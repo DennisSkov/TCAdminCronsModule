@@ -35,7 +35,7 @@ namespace TCAdminCrons.Crons.GameUpdates
             }
             catch (Exception e)
             {
-                Logger.LogException(e);
+                Logger.Fatal(e);
                 throw;
             }
             finally

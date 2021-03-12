@@ -1,4 +1,5 @@
 ﻿using Alexr03.Common.Logging;
+using Alexr03.Common.TCAdmin.Logging;
 using FluentScheduler;
 
 namespace TCAdminCrons
@@ -7,10 +8,10 @@ namespace TCAdminCrons
     {
         protected TcAdminCronJob()
         {
-            Logger = Logger.Create(GetType());
+            Logger = LogManager.Create(GetType());
         }
 
-        public Logger Logger { get; }
+        public LogManager Logger { get; }
         
         public abstract System.Threading.Tasks.Task DoAction();
 
