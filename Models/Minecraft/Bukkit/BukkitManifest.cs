@@ -22,7 +22,7 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
         public string Md5 { get; set; }
 
         [JsonProperty("built")] 
-        public int Built { get; set; }
+        public long Built { get; set; }
         
         public GameUpdate GetGameUpdate()
         {
