@@ -44,6 +44,21 @@ namespace TCAdminCrons.Configuration
         
         public override string FileName { get; set; } = "minecraft_server.jar";
     }
+    
+    public class PurpurSettings : GameUpdateSettings
+    {
+        public override bool Enabled { get; set; }
+        public override string Group { get; set; } = "Purpur";
+        public override string NameTemplate { get; set; } = "{Update.Version}";
+
+        public override string Description { get; set; } =
+            "Purpur is a drop-in replacement for Paper servers designed for configurability, new fun & exciting gameplay features, and high performanceng performance. | Added by TCAdminCrons";
+
+        public override bool UseVersionAsViewOrder { get; set; } = true;
+        public override int GetLastReleaseUpdates { get; set; } = 15;
+        
+        public override string FileName { get; set; } = "minecraft_server.jar";
+    }
 
     public class SpigotSettings : GameUpdateSettings
     {
