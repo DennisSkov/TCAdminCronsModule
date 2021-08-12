@@ -1,4 +1,4 @@
-﻿INSERT INTO tc_modules (module_id, display_name, version, enabled, config_page, component_directory,
+INSERT INTO tc_modules (module_id, display_name, version, enabled, config_page, component_directory,
                         security_class)
 VALUES ('3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 'Crons', '2.0', 1, null, null, null);
 
@@ -80,6 +80,13 @@ VALUES (5, 'TCAdminCrons.Crons.GameUpdates.MinecraftSpigotUpdatesCron, TCAdminCr
 <values>
   <add key="Group" value="Minecraft" type="System.String,mscorlib" />
 </values>');
+INSERT INTO tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
+                                        executeEverySeconds, app_data)
+VALUES (4, 'TCAdminCrons.Crons.GameUpdates.MinecraftPurpurUpdatesCron, TCAdminCrons',
+        '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 6, 1, 3600, '<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<values>
+  <add key="Group" value="Minecraft" type="System.String,mscorlib" />
+</values>');
 
 -- Configurations ------------------------------------------------------------------------------------------------------
 
@@ -114,6 +121,13 @@ VALUES (4, '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 'PaperSettings',
 INSERT INTO ar_common_configurations (id, moduleId, name, typeName, contents, app_data)
 VALUES (5, '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 'SpigotSettings',
         'TCAdminCrons.Configuration.SpigotSettings, TCAdminCrons',
+        '{}', '<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<values>
+  <add key="AR_COMMON:ConfigurationView" value="MinecraftGameUpdate" type="System.String,mscorlib" />
+</values>');
+INSERT INTO ar_common_configurations (id, moduleId, name, typeName, contents, app_data)
+VALUES (6, '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 'PurpurSettings',
+        'TCAdminCrons.Configuration.PurpurSettings, TCAdminCrons',
         '{}', '<?xml version="1.0" encoding="utf-16" standalone="yes"?>
 <values>
   <add key="AR_COMMON:ConfigurationView" value="MinecraftGameUpdate" type="System.String,mscorlib" />
