@@ -34,7 +34,7 @@ namespace TCAdminCrons.Configuration
     {
         public override bool Enabled { get; set; }
         public override string Group { get; set; } = "Paper";
-        public override string NameTemplate { get; set; } = "{Update.Version}";
+        public override string NameTemplate { get; set; } = "{Update.Version} (Build: {Update.Version.Build})";
 
         public override string Description { get; set; } =
             "Paper is the next generation of Minecraft server, compatible with Spigot plugins and offering uncompromising performance. | Added by TCAdminCrons";
