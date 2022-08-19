@@ -60,7 +60,7 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
         
         private static string GetDownloadUrl(string version)
         {
-            return $"https://serverjars.com/api/fetchJar/bukkit/{version}";
+            return $"https://serverjars.com/api/fetchJar/servers/bukkit/{version}";
         }
     }
     public class BukkitVersionManifest
@@ -72,7 +72,7 @@ namespace TCAdminCrons.Models.Minecraft.Bukkit
             using (var wc = new WebClient())
             {
                 return JsonConvert.DeserializeObject<BukkitVersionManifest>(
-                    wc.DownloadString("https://serverjars.com/api/fetchAll/bukkit"));
+                    wc.DownloadString("https://serverjars.com/api/fetchAll/servers/bukkit"));
             }
         }
     }
