@@ -60,7 +60,7 @@ namespace TCAdminCrons.Models.Minecraft.Purpur
         
         private static string GetDownloadUrl(string version)
         {
-            return $"https://serverjars.com/api/fetchJar/purpur/{version}";
+            return $"https://serverjars.com/api/fetchJar/servers/purpur/{version}";
         }
     }
     public class PurpurVersionManifest
@@ -72,7 +72,7 @@ namespace TCAdminCrons.Models.Minecraft.Purpur
             using (var wc = new WebClient())
             {
                 return JsonConvert.DeserializeObject<PurpurVersionManifest>(
-                    wc.DownloadString("https://serverjars.com/api/fetchAll/purpur"));
+                    wc.DownloadString("https://serverjars.com/api/fetchAll/servers/purpur"));
             }
         }
     }
