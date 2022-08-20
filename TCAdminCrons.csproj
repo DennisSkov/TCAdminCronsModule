@@ -260,6 +260,7 @@
         <Compile Include="Controllers\CronsController.cs" />
         <Compile Include="Crons\GameUpdates\MinecraftBukkitUpdatesCron.cs" />
         <Compile Include="Crons\GameUpdates\MinecraftPaperUpdatesCron.cs" />
+        <Compile Include="Crons\GameUpdates\MinecraftPurpurUpdatesCron.cs" />
         <Compile Include="Crons\GameUpdates\MinecraftSpigotUpdatesCron.cs" />
         <Compile Include="Crons\GameUpdates\MinecraftVanillaSnapshotUpdatesCron.cs" />
         <Compile Include="Crons\GameUpdates\MinecraftVanillaUpdatesCron.cs" />
@@ -267,6 +268,7 @@
         <Compile Include="Models\EGameUpdateType.cs" />
         <Compile Include="Models\Minecraft\Bukkit\BukkitManifest.cs" />
         <Compile Include="Models\Minecraft\Paper\PaperManifest.cs" />
+        <Compile Include="Models\Minecraft\Purpur\PurpurManifest.cs" />
         <Compile Include="Models\Minecraft\Spigot\SpigotManifest.cs" />
         <Compile Include="Models\Minecraft\Vanilla\MinecraftVersionManifest.cs" />
         <Compile Include="Models\Minecraft\Vanilla\MinecraftVersionMetadata.cs" />

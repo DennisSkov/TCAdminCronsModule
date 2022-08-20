@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
 using Alexr03.Common.Misc.Strings;
@@ -8,9 +8,9 @@ using TCAdminCrons.Configuration;
 using TCAdminCrons.Crons.GameUpdates;
 using TCAdminCrons.Models.Objects;
 
-namespace TCAdminCrons.Models.Minecraft.Spigot
+namespace TCAdminCrons.Models.Minecraft.Purpur
 {
-    public class SpigotResponse
+    public class PurpurResponse
     {
         [JsonProperty("version")]
         public string Version { get; set; }
@@ -26,7 +26,7 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
         
         public GameUpdate GetGameUpdate()
         {
-            var config = new CronJob().FindByType(typeof(MinecraftSpigotUpdatesCron)).Configuration.Parse<SpigotSettings>();
+            var config = new CronJob().FindByType(typeof(MinecraftPurpurUpdatesCron)).Configuration.Parse<PurpurSettings>();
             
             var newId = Regex.Replace(this.Version, "[^0-9]", "");
             int.TryParse(newId, out var parsedId);
@@ -60,19 +60,19 @@ namespace TCAdminCrons.Models.Minecraft.Spigot
         
         private static string GetDownloadUrl(string version)
         {
-            return $"https://serverjars.com/api/fetchJar/servers/spigot/{version}";
+            return $"https://serverjars.com/api/fetchJar/servers/purpur/{version}";
         }
     }
-    public class SpigotVersionManifest
+    public class PurpurVersionManifest
     {
-        [JsonProperty("response")] public IList<SpigotResponse> Version { get; set; }
+        [JsonProperty("response")] public IList<PurpurResponse> Version { get; set; }
 
-        public static SpigotVersionManifest GetManifests()
+        public static PurpurVersionManifest GetManifests()
         {
             using (var wc = new WebClient())
             {
-                return JsonConvert.DeserializeObject<SpigotVersionManifest>(
-                    wc.DownloadString("https://serverjars.com/api/fetchAll/servers/spigot"));
+                return JsonConvert.DeserializeObject<PurpurVersionManifest>(
+                    wc.DownloadString("https://serverjars.com/api/fetchAll/servers/purpur"));
             }
         }
     }
