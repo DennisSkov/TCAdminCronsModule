@@ -13,7 +13,7 @@ namespace TCAdminCrons.Models.Minecraft.Purpur
     public class PurpurResponse
     {
         [JsonProperty("versions")]
-        public string Versions[] { get; set; }
+        public string[] Versions{ get; set; }
         
         [JsonProperty("project")]
         public string Project { get; set; }
