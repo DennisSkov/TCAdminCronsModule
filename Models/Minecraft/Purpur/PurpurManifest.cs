@@ -65,7 +65,7 @@ namespace TCAdminCrons.Models.Minecraft.Purpur
     }
     public class PurpurVersionManifest
     {
-        [JsonProperty("response")] public IList<PurpurResponse> Version { get; set; }
+        [JsonProperty("versions")] public IList<PurpurResponse> Version { get; set; }
 
         public static PurpurVersionManifest GetManifests()
         {
