@@ -82,7 +82,7 @@ VALUES (5, 'TCAdminCrons.Crons.GameUpdates.MinecraftSpigotUpdatesCron, TCAdminCr
 </values>');
 INSERT INTO tcmodule_cron_jobs (id, typeName, configurationModuleId, configurationId, executeOrder,
                                         executeEverySeconds, app_data)
-VALUES (4, 'TCAdminCrons.Crons.GameUpdates.MinecraftPurpurUpdatesCron, TCAdminCrons',
+VALUES (6, 'TCAdminCrons.Crons.GameUpdates.MinecraftPurpurUpdatesCron, TCAdminCrons',
         '3a0e1e17-cbee-4e00-871e-e3f492e8c8da', 6, 1, 3600, '<?xml version="1.0" encoding="utf-16" standalone="yes"?>
 <values>
   <add key="Group" value="Minecraft" type="System.String,mscorlib" />
