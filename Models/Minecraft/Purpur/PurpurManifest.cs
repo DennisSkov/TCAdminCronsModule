@@ -12,17 +12,11 @@ namespace TCAdminCrons.Models.Minecraft.Purpur
 {
     public class PurpurResponse
     {
-        [JsonProperty("version")]
-        public string Version { get; set; }
-
-        [JsonProperty("file")]
-        public string File { get; set; }
-
-        [JsonProperty("md5")]
-        public string Md5 { get; set; }
-
-        [JsonProperty("built")]
-        public long Built { get; set; }
+        [JsonProperty("versions")]
+        public string Versions[] { get; set; }
+        
+        [JsonProperty("project")]
+        public string Project { get; set; }
         
         public GameUpdate GetGameUpdate()
         {
