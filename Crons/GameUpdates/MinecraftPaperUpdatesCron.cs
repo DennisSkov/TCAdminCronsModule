@@ -48,6 +48,7 @@ namespace TCAdminCrons.Crons.GameUpdates
         {
             var gameUpdates = GameUpdate.GetUpdates(_paperSettings.GameId).Cast<GameUpdate>().ToList();
             var paperUpdates = PaperManifest.GetManifest();
+            paperUpdates.Versions = paperUpdates.Versions.Reverse().ToList();
 
             foreach (var version in paperUpdates.Versions.Take(_paperSettings.GetLastReleaseUpdates))
             {
